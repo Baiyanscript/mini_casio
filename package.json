@@ -1,0 +1,27 @@
+{
+    "name": "math-toolbox-app",
+    "version": "1.0.0",
+    "description": "多功能数学计算工具箱 for Xiaomi Vela",
+    "main": "app.js",
+    "scripts": {
+      "build": "vela build",
+      "start": "vela run",
+      "debug": "vela debug"
+    },
+    "keywords": [
+      "xiaomi-vela",
+      "calculator",
+      "math",
+      "wearable"
+    ],
+    "author": "Your Name",
+    "license": "MIT",
+    "devDependencies": {
+      "@vela/cli": "^1.0.0"
+    },
+    "dependencies": {
+      "@system.router": "^1.0.0",
+      "@system.prompt": "^1.0.0",
+      "@system.app": "^1.0.0"
+    }
+  }

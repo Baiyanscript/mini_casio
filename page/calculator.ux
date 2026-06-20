@@ -1,0 +1,78 @@
+<template>
+  <div class="container">
+    <div class="display">
+      <text class="expression">{{expression}}</text>
+      <text class="result">{{result}}</text>
+    </div>
+    
+    <div class="keypad">
+      <!-- 数字键 -->
+      <div class="row" for="{{rows}}">
+        <button class="btn" for="{{$item}}" onclick="handleInput($item)">{{$item}}</button>
+      </div>
+      
+      <!-- 功能键 -->
+      <div class="function-row">
+        <button class="func-btn" onclick="clearAll()">C</button>
+        <button class="func-btn" onclick="backspace()">⌫</button>
+        <button class="func-btn" onclick="toggleFraction()">分数/小数</button>
+        <button class="func-btn" onclick="calculate()">=</button>
+      </div>
+      
+      <!-- 高级运算 -->
+      <div class="advanced-row">
+        <button class="adv-btn" onclick="addFunction('sin(')">sin</button>
+        <button class="adv-btn" onclick="addFunction('cos(')">cos</button>
+        <button class="adv-btn" onclick="addFunction('tan(')">tan</button>
+        <button class="adv-btn" onclick="addFunction('^')">^</button>
+        <button class="adv-btn" onclick="addFunction('√(')">√</button>
+        <button class="adv-btn" onclick="addFunction('log(')">log</button>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import { evaluate, toFraction, toDecimal } from '../common/math-utils'
+
+export default {
+  data: {
+    expression: '',
+    result: '',
+    isFractionMode: true
+  },
+  
+  handleInput(value) {
+    this.expression += value
+  },
+  
+  clearAll() {
+    this.expression = ''
+    this.result = ''
+  },
+  
+  backspace() {
+    this.expression = this.expression.slice(0, -1)
+  },
+  
+  calculate() {
+    try {
+      const decimalResult = evaluate(this.expression)
+      this.result = this.isFractionMode ? toFraction(decimalResult) : decimalResult.toString()
+    } catch (error) {
+      this.result = '错误'
+    }
+  },
+  
+  toggleFraction() {
+    this.isFractionMode = !this.isFractionMode
+    if (this.result) {
+      this.calculate() // 重新计算以切换显示格式
+    }
+  },
+  
+  addFunction(func) {
+    this.expression += func
+  }
+}
+</script>

@@ -1,0 +1,66 @@
+<template>
+  <div class="container">
+    <text class="title">数学工具箱</text>
+    
+    <list class="menu-list">
+      <list-item for="{{menuItems}}" class="menu-item" onclick="navigateTo($item.url)">
+        <text class="menu-text">{{$item.name}}</text>
+        <image src="/common/arrow.png" class="arrow"></image>
+      </list-item>
+    </list>
+  </div>
+</template>
+
+<style>
+.container {
+  width: 192px;
+  height: 490px;
+  flex-direction: column;
+  padding: 20px;
+}
+
+.title {
+  font-size: 20px;
+  text-align: center;
+  margin-bottom: 30px;
+  color: #000000;
+}
+
+.menu-list {
+  width: 100%;
+}
+
+.menu-item {
+  height: 60px;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #eeeeee;
+}
+
+.menu-text {
+  font-size: 16px;
+  color: #333333;
+}
+
+.arrow {
+  width: 16px;
+  height: 16px;
+}
+</style>
+
+<script>
+export default {
+  data: {
+    menuItems: [
+      { name: '计算器', url: '/pages/calculator' },
+      { name: '解方程', url: '/pages/equation' },
+      { name: '解不等式', url: '/pages/inequality' },
+      { name: '函数图像', url: '/pages/graph' }
+    ]
+  },
+  
+  navigateTo(url) {
+    this.$page.router.push({ uri: url })
+  }
+}
+</script>

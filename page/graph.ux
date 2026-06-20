@@ -1,0 +1,35 @@
+<template>
+  <div class="container">
+    <input class="input" placeholder="函数表达式" value="{{expression}}" onchange="updateExpression($event.value)"/>
+    <input class="input" placeholder="x最小值" value="{{xMin}}" onchange="updateXMin($event.value)"/>
+    <input class="input" placeholder="x最大值" value="{{xMax}}" onchange="updateXMax($event.value)"/>
+    <input class="input" placeholder="步长" value="{{step}}" onchange="updateStep($event.value)"/>
+    
+    <button class="plot-btn" onclick="plotFunction()">绘制</button>
+    
+    <chart class="chart" options="{{chartOptions}}"></chart>
+  </div>
+</template>
+
+<script>
+import { plotFunction } from '../common/graphing-utils'
+
+export default {
+  data: {
+    expression: 'x*sin(x)',
+    xMin: '0',
+    xMax: '10',
+    step: '0.1',
+    chartOptions: {}
+  },
+  
+  plotFunction() {
+    this.chartOptions = plotFunction(
+      this.expression,
+      parseFloat(this.xMin),
+      parseFloat(this.xMax),
+      parseFloat(this.step)
+    )
+  }
+}
+</script>

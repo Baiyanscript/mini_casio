@@ -1,0 +1,79 @@
+<template>
+  <div class="container">
+    <text class="title">解方程</text>
+    
+    <select class="type-select" onchange="changeEquationType($event.value)">
+      <option for="{{equationTypes}}" value="{{$item.value}}">{{$item.label}}</option>
+    </select>
+    
+    <input class="input" placeholder="输入方程系数" value="{{coefficients}}" onchange="updateCoefficients($event.value)"/>
+    
+    <button class="solve-btn" onclick="solve()">求解</button>
+    
+    <text class="result">{{solution}}</text>
+    
+    <!-- 迭代法选项 -->
+    <div if="{{showIterative}}" class="iterative-section">
+      <text>迭代法选项</text>
+      <input placeholder="初始值" value="{{initialGuess}}" onchange="updateInitialGuess($event.value)"/>
+      <input placeholder="容差" value="{{tolerance}}" onchange="updateTolerance($event.value)"/>
+      <button onclick="solveIterative()">迭代求解</button>
+    </div>
+  </div>
+</template>
+
+<script>
+import { solveLinear, solveQuadratic, solveCubic, solveIterative } from '../common/math-utils'
+
+export default {
+  data: {
+    equationTypes: [
+      { value: 'linear', label: '一元一次' },
+      { value: 'quadratic', label: '一元二次' },
+      { value: 'cubic', label: '一元三次' }
+    ],
+    currentType: 'linear',
+    coefficients: '',
+    solution: '',
+    initialGuess: '0',
+    tolerance: '0.0001'
+  },
+  
+  changeEquationType(type) {
+    this.currentType = type
+  },
+  
+  solve() {
+    try {
+      const coeffs = this.coefficients.split(',').map(Number)
+      let result
+      
+      switch (this.currentType) {
+        case 'linear':
+          result = solveLinear(coeffs)
+          break
+        case 'quadratic':
+          result = solveQuadratic(coeffs)
+          break
+        case 'cubic':
+          result = solveCubic(coeffs)
+          break
+      }
+      
+      this.solution = `解: ${result}`
+    } catch (error) {
+      this.solution = '求解错误'
+    }
+  },
+  
+  solveIterative() {
+    try {
+      const func = new Function('x', `return ${this.coefficients}`)
+      const result = solveIterative(func, parseFloat(this.initialGuess), parseFloat(this.tolerance))
+      this.solution = `迭代解: ${result}`
+    } catch (error) {
+      this.solution = '迭代求解错误'
+    }
+  }
+}
+</script>

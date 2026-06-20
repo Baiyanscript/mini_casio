@@ -1,0 +1,53 @@
+/* constants.css - 全局CSS变量定义 */
+:root {
+    /* 颜色主题 - 明亮模式 */
+    --primary-color: #007AFF;        /* 主色调 - 蓝色 */
+    --primary-color-dark: #0056CC;   /* 主色调深色 */
+    --secondary-color: #E4E4E4;      /* 次要色调 - 浅灰 */
+    --secondary-color-dark: #D1D1D1; /* 次要色调深色 */
+    --accent-color: #FF9500;         /* 强调色 - 橙色 */
+    --function-color: #34C759;       /* 功能键颜色 - 绿色 */
+    --function-color-dark: #2CA44F;  /* 功能键深色 */
+    
+    /* 背景颜色 */
+    --bg-color-primary: #FFFFFF;     /* 主背景色 - 白色 */
+    --bg-color-secondary: #F2F2F7;   /* 次要背景色 - 浅灰 */
+    --bg-color-active: #E3E3E8;      /* 激活状态背景色 */
+    
+    /* 文字颜色 */
+    --text-color-primary: #000000;   /* 主文字颜色 - 黑色 */
+    --text-color-secondary: #666666; /* 次要文字颜色 - 深灰 */
+    --text-color-inverse: #FFFFFF;   /* 反色文字 - 白色 */
+    
+    /* 边框颜色 */
+    --border-color: #C6C6C8;         /* 边框颜色 - 浅灰 */
+    --border-color-light: #E5E5E7;   /* 浅边框颜色 */
+    
+    /* 阴影 */
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+    
+    /* 圆角 */
+    --radius-sm: 4px;
+    --radius-md: 8px;
+    --radius-lg: 12px;
+    
+    /* 字体大小 */
+    --font-size-xs: 12px;
+    --font-size-sm: 14px;
+    --font-size-md: 16px;
+    --font-size-lg: 18px;
+    --font-size-xl: 20px;
+  }
+  
+  /* 暗色主题支持（可选） */
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg-color-primary: #000000;
+      --bg-color-secondary: #1C1C1E;
+      --text-color-primary: #FFFFFF;
+      --text-color-secondary: #EBEBF5;
+      --border-color: #38383A;
+      --secondary-color: #3A3A3C;
+    }
+  }

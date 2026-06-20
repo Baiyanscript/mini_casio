@@ -1,0 +1,105 @@
+<template>
+  <div class="container">
+    <text class="title">解不等式</text>
+    
+    <select class="type-select" onchange="changeInequalityType($event.value)">
+      <option for="{{inequalityTypes}}" value="{{$item.value}}">{{$item.label}}</option>
+    </select>
+    
+    <div class="input-group">
+      <input class="coeff-input" placeholder="a" value="{{a}}" onchange="updateA($event.value)"/>
+      <text>x² +</text>
+      <input class="coeff-input" placeholder="b" value="{{b}}" onchange="updateB($event.value)"/>
+      <text>x +</text>
+      <input class="coeff-input" placeholder="c" value="{{c}}" onchange="updateC($event.value)"/>
+    </div>
+    
+    <select class="operator-select" onchange="updateOperator($event.value)">
+      <option for="{{operators}}" value="{{$item}}">{{$item}}</option>
+    </select>
+    
+    <input class="input" placeholder="常数项" value="{{d}}" onchange="updateD($event.value)"/>
+    
+    <button class="solve-btn" onclick="solve()">求解</button>
+    
+    <div class="result-display">
+      <text class="result-text">{{solution}}</text>
+    </div>
+  </div>
+</template>
+
+<style>
+.input-group {
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.coeff-input {
+  width: 40px;
+  height: 36px;
+  margin: 0 4px;
+  text-align: center;
+}
+
+.operator-select {
+  width: 60px;
+  height: 36px;
+  margin-bottom: 12px;
+}
+</style>
+
+<script>
+import { solveLinearInequality, solveQuadraticInequality } from '../../common/js/math-utils'
+
+export default {
+  data: {
+    inequalityTypes: [
+      { value: 'linear', label: '一元一次' },
+      { value: 'quadratic', label: '一元二次' }
+    ],
+    operators: ['>', '>=', '<', '<='],
+    currentType: 'linear',
+    a: '',
+    b: '',
+    c: '',
+    d: '0',
+    operator: '>',
+    solution: ''
+  },
+  
+  changeInequalityType(type) {
+    this.currentType = type;
+    this.solution = '';
+  },
+  
+  updateA(value) { this.a = value; },
+  updateB(value) { this.b = value; },
+  updateC(value) { this.c = value; },
+  updateD(value) { this.d = value; },
+  updateOperator(value) { this.operator = value; },
+  
+  solve() {
+    try {
+      const a = parseFloat(this.a || '0');
+      const b = parseFloat(this.b || '0');
+      const c = parseFloat(this.c || '0');
+      const d = parseFloat(this.d || '0');
+      
+      let result;
+      
+      if (this.currentType === 'linear') {
+        // 一元一次: ax + b > c 形式
+        result = solveLinearInequality(a, b - d, this.operator);
+      } else {
+        // 一元二次: ax² + bx + c > d 形式
+        result = solveQuadraticInequality(a, b, c - d, this.operator);
+      }
+      
+      this.solution = result;
+    } catch (error) {
+      this.solution = '求解错误: ' + error.message;
+    }
+  }
+}
+</script>
